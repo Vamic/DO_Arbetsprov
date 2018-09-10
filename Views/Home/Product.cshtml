@@ -1,0 +1,22 @@
+﻿@model IEnumerable<DO_Arbetsprov.Models.Price>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Marknad</th>
+            <th>Pris</th>
+            <th>Valuta</th>
+            <th>Start &amp; slut</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(DO_Arbetsprov.Models.Price price in Model)
+        {
+        <tr>
+            <td>@price.MarketId</td>
+            <td>@Math.Round(price.UnitPrice, 2)</td>
+            <td>@price.CurrencyCode</td>
+            <td>@price.ValidFrom - @price.ValidUntil</td>
+        </tr>
+        }
+    </tbody>
+</table>
