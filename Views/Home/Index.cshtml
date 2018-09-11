@@ -1,9 +1,0 @@
-﻿@model IEnumerable<string>
-@foreach(string product in Model)
-{
-    <div class="row">
-        <div class="col-md-4">
-            @Html.ActionLink(product, "product", new { id = product })
-        </div>
-    </div>
-}

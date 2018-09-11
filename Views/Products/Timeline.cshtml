@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<DO_Arbetsprov.Models.Price>
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
     <thead>
         <tr>
             <th>Marknad</th>
@@ -11,7 +11,7 @@
     <tbody>
         @foreach(DO_Arbetsprov.Models.Price price in Model)
         {
-        <tr>
+        <tr class="@(@price.ValidUntil == null ? "current-price" : "")">
             <td>@price.MarketId</td>
             <td>@Math.Round(price.UnitPrice, 2)</td>
             <td>@price.CurrencyCode</td>

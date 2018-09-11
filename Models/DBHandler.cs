@@ -8,7 +8,7 @@ using System.Web.Hosting;
 
 namespace DO_Arbetsprov.Models
 {
-    public class DBService
+    public class DBModel
     {
         //Get the path to db
         private string connectionString = "DataSource=" + HostingEnvironment.MapPath("~/App_Data/DefaultDB.db");
@@ -34,6 +34,31 @@ namespace DO_Arbetsprov.Models
             }
         }
 
+        //Gets all market-currency pairs for a given catalog entry code
+        public List<MarketCurrencyPair> GetProductMarketCurrencyPairs(string entryCode)
+        {
+            using (SQLiteConnection conn = new SQLiteConnection(connectionString))
+            using (SQLiteCommand command = conn.CreateCommand())
+            {
+                conn.Open();
+                //DISTINCT to remove duplicates
+                command.CommandText = "SELECT DISTINCT MarketId, CurrencyCode FROM prices WHERE CatalogEntryCode = @Code ORDER BY UnitPrice DESC";
+                command.Parameters.AddWithValue("Code", entryCode);
+                using (var reader = command.ExecuteReader())
+                {
+                    List<MarketCurrencyPair> markets = new List<MarketCurrencyPair>();
+                    while (reader.Read())
+                    {
+                        markets.Add(new MarketCurrencyPair{
+                            MarketId = reader.GetString(0),
+                            CurrencyCode = reader.GetString(1)
+                        });
+                    }
+                    return markets;
+                }
+            }
+        }
+
         //Gets all price entries for a given catalog entry code
         public List<Price> GetProductPrices(string entryCode)
         {
@@ -41,7 +66,7 @@ namespace DO_Arbetsprov.Models
             using (SQLiteCommand command = conn.CreateCommand())
             {
                 conn.Open();
-                command.CommandText = "SELECT * FROM prices WHERE CatalogEntryCode = @Code ORDER BY ValidFrom";
+                command.CommandText = "SELECT * FROM prices WHERE CatalogEntryCode = @Code ORDER BY UnitPrice DESC";
                 command.Parameters.AddWithValue("Code", entryCode);
                 using (var reader = command.ExecuteReader())
                 {
