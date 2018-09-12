@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Hosting;
 
 namespace DO_Arbetsprov.Models
 {
-    public class DBModel
+    public class DBHandler
     {
         //Get the path to db
-        private string connectionString = "DataSource=" + HostingEnvironment.MapPath("~/App_Data/DefaultDB.db");
-
+        private static readonly string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        
         //Gets all unique catalog entry codes
         public List<string> GetAllProducts()
         {
@@ -77,19 +79,15 @@ namespace DO_Arbetsprov.Models
                         Price price = new Price
                         {
                             PriceValueId = reader.GetInt32(0),
-                            Created = (DateTime)reader.GetValue(1),
-                            Modified = (DateTime)reader.GetValue(2),
+                            Created = reader.GetDateTime(1),
+                            Modified = reader.GetDateTime(2),
                             CatalogEntryCode = reader.GetString(3),
                             MarketId = reader.GetString(4),
                             CurrencyCode = reader.GetString(5),
-                            ValidFrom = (DateTime)reader.GetValue(6),
+                            ValidFrom = reader.GetDateTime(6),
+                            ValidUntil = reader.GetValue(7) as DateTime?,
                             UnitPrice = reader.GetDecimal(8)
                         };
-                        //ValidUntil is the only column that can be null so only set it if it isn't
-                        if(reader.GetString(7) != "NULL")
-                        {
-                            price.ValidUntil = (DateTime)reader.GetValue(7);
-                        }
                         prices.Add(price);
                     }
                     return prices;

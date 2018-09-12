@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DO_Arbetsprov.App_Start;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace DO_Arbetsprov
     {
         protected void Application_Start()
         {
+            DBInit.InitializeDatabase();
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

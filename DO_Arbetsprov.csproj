@@ -173,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\DBInit.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -181,7 +182,7 @@
     </Compile>
     <Compile Include="Models\MarketCurrencyPair.cs" />
     <Compile Include="Models\Price.cs" />
-    <Compile Include="Models\DBModel.cs" />
+    <Compile Include="Models\DBHandler.cs" />
     <Compile Include="Models\Services\ProductService.cs" />
     <Compile Include="Models\Services\PriceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,7 +202,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\price_detail.csv" />
-    <Content Include="App_Data\DefaultDB.db" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
