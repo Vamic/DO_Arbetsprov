@@ -14,11 +14,23 @@ namespace DO_Arbetsprov.Models
 
             //The list of prices that will be displayed
             List<Price> priceHistory = new List<Price>();
-
+            
+            Price baseprice = prices.FirstOrDefault(price => price.ValidUntil == null);
+            if(baseprice == null)
+            {
+                baseprice = new Price(prices[0]);
+                baseprice.ValidFrom = new DateTime(1970, 1, 1, 0, 0, 0);
+                baseprice.ValidUntil = null;
+                baseprice.UnitPrice = 0;
+            }
             //Add the base price
-            priceHistory.Add(prices.Find(price => price.ValidUntil == null));
-            //Remove all prices above the base price as theyd never be the cheapest
-            prices.RemoveAll(price => price.UnitPrice >= priceHistory[0].UnitPrice);
+            priceHistory.Add(baseprice);
+            
+            if(baseprice.UnitPrice > 0)
+            {
+                //Remove all prices above the base price as theyd never be the cheapest
+                prices.RemoveAll(price => price.UnitPrice >= priceHistory[0].UnitPrice);
+            }
 
             for (int i = 0; i < prices.Count; i++)
             {
