@@ -11,7 +11,8 @@
     <tbody>
         @foreach(DO_Arbetsprov.Models.Price price in Model)
         {
-        <tr class="@(@price.ValidUntil == null ? "current-price" : "")">
+            //Mark the end of each market-currency pair
+        <tr class="@(@price.ValidUntil == null ? "last-price" : "")">
             <td>@price.MarketId</td>
             <td>@Math.Round(price.UnitPrice, 2)</td>
             <td>@price.CurrencyCode</td>

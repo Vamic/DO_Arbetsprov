@@ -8,7 +8,8 @@ namespace DO_Arbetsprov.Models
     public class ProductService
     {
         DBHandler dbHandler = new DBHandler();
-        //Gets all price entries and converts them into a timeline
+
+        //Gets all unique product codes
         public List<string> GetAllProducts()
         {
             return dbHandler.GetAllProducts();

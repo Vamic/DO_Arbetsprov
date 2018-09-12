@@ -18,9 +18,13 @@ namespace DO_Arbetsprov.Models
             Price baseprice = prices.FirstOrDefault(price => price.ValidUntil == null);
             if(baseprice == null)
             {
+                //Copy the values like market and currency type
                 baseprice = new Price(prices[0]);
+                //Replace start with 1970
                 baseprice.ValidFrom = new DateTime(1970, 1, 1, 0, 0, 0);
+                //Replace end with forever
                 baseprice.ValidUntil = null;
+                //Since this isn't a real price, its displayed as 0
                 baseprice.UnitPrice = 0;
             }
             //Add the base price
